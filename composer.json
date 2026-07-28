@@ -1,6 +1,7 @@
 {
     "name": "andichaerul/penjaminan-online",
     "description": "Penjaminan Online",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Andichaerul\\PenjaminanOnline\\": "src/"
