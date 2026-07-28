@@ -30,9 +30,9 @@ class LogPermohonan
 
         $url = 'https://api-v2.penjaminan-online.id/logs';
         $headers = [
-            'X-API-Key: ' . $xApiKey,
-            // 'Content-Type: application/json',
-            // 'Accept: application/json',
+            "X-API-Key: $xApiKey",
+            'Content-Type: application/json',
+            'Accept: application/json',
         ];
 
         $data = [

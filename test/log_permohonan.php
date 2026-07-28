@@ -8,13 +8,13 @@ use Andichaerul\PenjaminanOnline\LogPermohonan\LogPermohonanProsesEnum;
 $logPermohonan = LogPermohonan::create(
     1,
     null,
-    "zzzz",
+    "brins",
     'insurance',
-    [],
-    [],
-    [],
+    null,
+    null,
+    null,
     1,
     LogPermohonanProsesEnum::permohonan_disubmit_prinsipal,
-    1
+    "0.0.0.0"
 );
 echo $logPermohonan; // Output: Hello World
