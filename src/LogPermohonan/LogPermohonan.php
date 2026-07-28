@@ -67,7 +67,6 @@ class LogPermohonan
 
         if (is_string($response)) {
             $jsonDecode = json_decode($response, true);
-            print_r($jsonDecode);
             if (isset($jsonDecode['status']) && $jsonDecode['status'] === true) {
                 return true;
             }
