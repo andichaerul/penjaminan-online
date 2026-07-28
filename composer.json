@@ -1,0 +1,17 @@
+{
+    "name": "andichaerul/penjaminan-online",
+    "description": "Penjaminan Online",
+    "autoload": {
+        "psr-4": {
+            "Andichaerul\\PenjaminanOnline\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Andi Chaerul"
+        }
+    ],
+    "require-dev": {
+        "vimeo/psalm": "^6.16"
+    }
+}
