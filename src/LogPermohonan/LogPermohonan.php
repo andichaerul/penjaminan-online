@@ -2,25 +2,27 @@
 
 namespace Andichaerul\PenjaminanOnline\LogPermohonan;
 
-use Andichaerul\PenjaminanOnline\LogPermohonan\LogPermohonanProsesEnum;
+
 
 
 class LogPermohonan
 {
     /**
-     * @param int $permohonanId
-     * @param string|null $nomorDokumen
-     * @param string|null $companyCode
-     * @param "insurance"|"bank" $type
-     * @param array|null $payload
-     * @param array|null $beforeValues
-     * @param array|null $afterValues
-     * @param int|null $userId
-     * @param LogPermohonanProsesEnum $proses
-     * @param string|null $ipAddress
+     * @param array{
+     *    permohonanId: int,
+     *    nomorDokumen: string|null,
+     *    companyCode: string|null,
+     *    type: "insurance"|"bank",
+     *    payload: string|null, // json string
+     *    beforeValues: string|null, // json string
+     *    afterValues: string|null, // json string
+     *    userId: int|null,
+     *    proses: string,
+     *    ipAddress: string|null
+     * } $datas
      * @return bool
      */
-    public static function create($permohonanId, $nomorDokumen, $companyCode, $type, $payload, $beforeValues, $afterValues, $userId, $proses, $ipAddress,)
+    public static function create($datas)
     {
 
         $xApiKey = getenv('PENJAMINAN_ONLINE_LOG_PERMOHONAN_API_KEY');
@@ -36,16 +38,16 @@ class LogPermohonan
         ];
 
         $data = [
-            "permohonanId" => $permohonanId,
-            "nomorDokumen" => $nomorDokumen,
-            "companyCode" => $companyCode,
-            "type" => $type,
-            "payload" => $payload,
-            "beforeValues" => $beforeValues,
-            "afterValues" => $afterValues,
-            "userId" => $userId,
-            "proses" => $proses,
-            "ipAddress" => $ipAddress,
+            "permohonanId" => $datas['permohonanId'],
+            "nomorDokumen" => $datas['nomorDokumen'],
+            "companyCode" => $datas['companyCode'],
+            "type" => $datas['type'],
+            "payload" => $datas['payload'],
+            "beforeValues" => $datas['beforeValues'],
+            "afterValues" => $datas['afterValues'],
+            "userId" => $datas['userId'],
+            "proses" => $datas['proses'],
+            "ipAddress" => $datas['ipAddress'],
         ];
 
         $ch = curl_init($url);

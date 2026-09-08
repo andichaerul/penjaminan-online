@@ -2,19 +2,20 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Andichaerul\PenjaminanOnline\LogPermohonan\LogPermohonan;
-use Andichaerul\PenjaminanOnline\LogPermohonan\LogPermohonanProsesEnum;
+require_once __DIR__ . '/init.php';
 
-$logPermohonan = LogPermohonan::create(
-    1,
-    null,
-    "brins",
-    'insurance',
-    null,
-    null,
-    null,
-    1,
-    LogPermohonanProsesEnum::permohonan_disubmit_prinsipal,
-    "0.0.0.0"
-);
+use Andichaerul\PenjaminanOnline\LogPermohonan\LogPermohonan;
+
+$logPermohonan = LogPermohonan::create([
+    "permohonanId" => 123,
+    "nomorDokumen" => "ABC123",
+    "companyCode" => "brins",
+    "type" => "insurance",
+    "payload" => "ini json",
+    "beforeValues" => "ini json",
+    "afterValues" => "ini json",
+    "userId" => 456,
+    "proses" => "menunggu",
+    "ipAddress" => "0.0.0.0"
+]);
 echo $logPermohonan; // Output: Hello World
