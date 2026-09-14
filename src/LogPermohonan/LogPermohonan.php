@@ -48,6 +48,7 @@ class LogPermohonan
             "userId" => $datas['userId'],
             "proses" => $datas['proses'],
             "ipAddress" => $datas['ipAddress'],
+            "host" => $_SERVER['HTTP_HOST'] ?? null,
         ];
 
         $ch = curl_init($url);
