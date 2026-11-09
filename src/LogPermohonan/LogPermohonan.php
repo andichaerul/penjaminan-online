@@ -8,6 +8,19 @@ namespace Andichaerul\PenjaminanOnline\LogPermohonan;
 class LogPermohonan
 {
     /**
+     * @return string
+     */
+    private static function getXApiKey()
+    {
+        $xApiKey = getenv('PENJAMINAN_ONLINE_LOG_PERMOHONAN_API_KEY');
+        if (is_string($xApiKey)) {
+            return $xApiKey;
+        } else {
+            throw new \Exception('PENJAMINAN_ONLINE_LOG_PERMOHONAN_API_KEY environment variable is not set');
+        }
+    }
+
+    /**
      * @param array{
      *    permohonanId: int,
      *    nomorDokumen: string|null,
@@ -24,12 +37,7 @@ class LogPermohonan
      */
     public static function create($datas)
     {
-
-        $xApiKey = getenv('PENJAMINAN_ONLINE_LOG_PERMOHONAN_API_KEY');
-        if ($xApiKey === false) {
-            throw new \Exception('PENJAMINAN_ONLINE_LOG_PERMOHONAN_API_KEY environment variable is not set');
-        }
-
+        $xApiKey = self::getXApiKey();
         $url = 'https://api-v2.penjaminan-online.id/logs';
         $headers = [
             "X-API-Key: $xApiKey",
@@ -53,7 +61,7 @@ class LogPermohonan
 
         $ch = curl_init($url);
         if ($ch === false) {
-            die('Failed to initialize cURL');
+            throw new \Exception("Failed to initialize cURL");
         }
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -64,7 +72,8 @@ class LogPermohonan
         $response = curl_exec($ch);
 
         if (curl_errno($ch)) {
-            die('cURL Error: ' . curl_error($ch));
+            $error = 'cURL Error: ' . curl_error($ch);
+            throw new \Exception($error);
         }
 
 
@@ -77,5 +86,55 @@ class LogPermohonan
 
         $resStr  = (string) $response;
         throw new \Exception("Failed to create log permohonan. Response: $resStr");
+    }
+
+    /**
+     * @param int $permohonanId
+     * @return array{
+     *    status: bool,
+     *    message: string|null,
+     *    data: list<array{id:int, createdAt:string, updatedAt:string}>|null,
+     * }
+     */
+    public static function get($permohonanId)
+    {
+        $xApiKey = self::getXApiKey();
+        $url = 'https://api-v2.penjaminan-online.id/logs';
+        $headers = [
+            "X-API-Key: $xApiKey",
+            'Content-Type: application/json',
+            'Accept: application/json',
+        ];
+
+        $curl = curl_init();
+        if ($curl === false) {
+            throw new \Exception("Failed to initialize cURL :47570");
+        }
+
+        $params = [
+            "permohonanId" => $permohonanId,
+        ];
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url . '?' . http_build_query($params),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPGET => true,
+            CURLOPT_HTTPHEADER => $headers,
+        ]);
+
+        /** @var string|false */
+        $response = curl_exec($curl);
+
+
+        if ($response === false) {
+            throw new \Exception(curl_error($curl));
+        }
+
+
+        $data = json_decode($response, true);
+
+        // var_dump($data);
+
+        return $data;
     }
 }

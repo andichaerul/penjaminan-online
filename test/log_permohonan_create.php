@@ -8,7 +8,7 @@ use Andichaerul\PenjaminanOnline\LogPermohonan\LogPermohonan;
 
 $logPermohonan = LogPermohonan::create([
     "permohonanId" => 123,
-    "nomorDokumen" => "ABC123",
+    "nomorDokumen" => "TEST_DARI_SDK_LOCAL",
     "companyCode" => "brins",
     "type" => "insurance",
     "payload" => "ini json",
