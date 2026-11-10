@@ -91,10 +91,10 @@ class LogPermohonan
     /**
      * @param int $permohonanId
      * @return array{
-     *    status: bool,
-     *    message: string|null,
-     *    data: list<array{id:int, createdAt:string, updatedAt:string}>|null,
-     * }
+     *    status?: bool,
+     *    message?: string|null,
+     *    data?: list<array{id:int, createdAt:string, updatedAt:string}>|null,
+     * }|null
      */
     public static function get($permohonanId)
     {
