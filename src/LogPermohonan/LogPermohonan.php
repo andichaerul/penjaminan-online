@@ -2,9 +2,6 @@
 
 namespace Andichaerul\PenjaminanOnline\LogPermohonan;
 
-
-
-
 class LogPermohonan
 {
     /**
@@ -90,11 +87,7 @@ class LogPermohonan
 
     /**
      * @param int $permohonanId
-     * @return array{
-     *    status?: bool,
-     *    message?: string|null,
-     *    data?: list<array{id:int, createdAt:string, updatedAt:string}>|null,
-     * }|null
+     * @return array{status:bool, message?: string|null, data?: list<mixed>}|null
      */
     public static function get($permohonanId)
     {
@@ -125,16 +118,27 @@ class LogPermohonan
         /** @var string|false */
         $response = curl_exec($curl);
 
+        if (curl_errno($curl)) {
+            $error = 'cURL Error: ' . curl_error($curl);
+            throw new \Exception($error);
+        }
+
 
         if ($response === false) {
             throw new \Exception(curl_error($curl));
         }
 
 
+        /** @var array{status:bool, message?: string|null, data?: list<mixed>} */
         $data = json_decode($response, true);
 
-        // var_dump($data);
+        // Response OK
+        if (isset($data['status']) && $data['status'] === true) {
+            return $data;
+        }
 
-        return $data;
+        // Response not OK
+        $resStr  = $response;
+        throw new \Exception("Failed to create log permohonan. Response: $resStr");
     }
 }
